@@ -4,7 +4,7 @@
 
 /**
  * This is my O(n^2) implementation for insert-sort.
- * 
+ * From 1+2+3 ..... n-1 = ((1+(n-1)) * (n-1))/2
  * @author sid16
  *
  */
