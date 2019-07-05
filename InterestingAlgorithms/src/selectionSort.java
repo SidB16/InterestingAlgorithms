@@ -9,5 +9,8 @@
  *
  */
 public class selectionSort {
-
+	
+	public void SelectionSort (String[] data) {
+		//Strategy: Walk-up, find min, swap, move-up
+	}
 }
