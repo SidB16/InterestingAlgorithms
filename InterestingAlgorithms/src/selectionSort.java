@@ -11,7 +11,7 @@
 public class selectionSort {
 	
 	public void SelectionSort (String[] data) {
-		//Strategy: Walk-up, find min, swap, move-up
+		//Strategy: Walk-up and Swap min
 		int n = data.length;
 		for(int i = 0; i < n-1; i++) { //Walk-up
 			int minElement = i; // index of minelement
