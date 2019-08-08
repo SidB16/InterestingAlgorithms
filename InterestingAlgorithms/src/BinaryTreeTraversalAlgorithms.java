@@ -12,57 +12,7 @@ import java.util.List;
  */
 										//added this for Generic type support
 public class BinaryTreeTraversalAlgorithms<E> {
-	//Nested node class
-	private class Node<E>{
-		//Feilds
-		E element;
-		Node<E> parent;
-		Node<E> left;
-		Node<E> right;
-		//Constructor
-		public Node(E e) {
-			this.element = e;
-		}
-		//Getters
-		public E getElement() {
-			return this.element;
-		}
-		public Node<E> getParent(){
-			return this.parent;
-		}
-		public Node<E> getLeftChild(){
-			return this.left;
-		}
-		public Node<E> getRightChild(){
-			return this.right;
-		}
-		//Setters
-		public void setElement(E newE) {
-			this.element = newE;
-		}
-		public void setLeft(Node<E> newL) {
-			this.left = newL;
-		}
-		public void setRight(Node<E> newR) {
-			this.right = newR; 
-		}
-	}
 	
-	/**
-	 * Using snapshot technique as oppose to lazy iterator to return an Iterable collection for usage later.
-	 * A reason for using Iterable collection rather than a primitive array is because we can use the for-each loop syntax on our collection!
-	 * 
-	 * @param n parent node
-	 * @return Iterable collection of immediate left and right children 
-	 */
-	public Iterable<Node<E>> children(Node<E> n){
-		List<Node<E>> snapshot = new ArrayList< >();
-		if(n.getLeftChild() != null)
-			snapshot.add(n.getLeftChild());
-		if(n.getRightChild() != null)
-			snapshot.add(n.getRightChild());
-		return snapshot;
-	}
 	/**
 	 * A Node is visited before it's children.
 	 * (Root, Left, Right)
@@ -125,4 +75,94 @@ public class BinaryTreeTraversalAlgorithms<E> {
 			inOrderHelper(snapshot,v.getRightChild());
 		return snapshot;
 	}
+	
+	//Nested node class
+		private class Node<E>{
+			//Feilds
+			E element;
+			Node<E> parent;
+			Node<E> left;
+			Node<E> right;
+			//Constructor
+			public Node(E e) {
+				this.element = e;
+			}
+			//Getters
+			public E getElement() {
+				return this.element;
+			}
+			public Node<E> getParent(){
+				return this.parent;
+			}
+			public Node<E> getLeftChild(){
+				return this.left;
+			}
+			public Node<E> getRightChild(){
+				return this.right;
+			}
+			//Setters
+			public void setElement(E newE) {
+				this.element = newE;
+			}
+			public void setLeft(Node<E> newL) {
+				this.left = newL;
+			}
+			public void setRight(Node<E> newR) {
+				this.right = newR; 
+			}
+		}
+		
+		/**
+		 * Using snapshot technique as oppose to lazy iterator to return an Iterable collection for usage later.
+		 * A reason for using Iterable collection rather than a primitive array is because we can use the for-each loop syntax on our collection!
+		 * 
+		 * @param n parent node
+		 * @return Iterable collection of immediate left and right children 
+		 */
+		public Iterable<Node<E>> children(Node<E> n){
+			List<Node<E>> snapshot = new ArrayList< >();
+			if(n.getLeftChild() != null)
+				snapshot.add(n.getLeftChild());
+			if(n.getRightChild() != null)
+				snapshot.add(n.getRightChild());
+			return snapshot;
+		}
+		Node<E> dummyRoot; //dummy root for the purpose of demonstrating Depth and Height algorithms.
+		
+		/**
+		 * Depth of a Node x is equal to the length of the simple path from Root node to x.
+		 * In simpler terms,
+		 * 1)Depth of Node x = no of ancestors of x, excluding x.
+		 * 2)We perform BOTTOM-UP recursive traversal till we reach root node.
+		 * 3) Base case: if x is root then depth of x = 0. Recursive case: Else, depth of node x is equal to ONE plus the depth of x's parent.
+		 * 
+		 * @param x Node whose depth is to be determined.
+		 * @return depth of x
+		 */
+		public int depth(Node<E> x) {
+			if(x.equals(dummyRoot)) //Base case
+				return 0;
+			else {//Recursive case
+				return 1 + depth(x.getParent());
+			}
+		}
+		/**
+		 * Height of a Node x is equal to number of edges on the LONGEST simple path from x to any leaf.
+		 * In simpler terms,
+		 * 1)Height of Node x is max depth of any leaf in the tree.
+		 * 2)We perform TOP-DOWN recursive traversal till we reach a leaf.
+		 * 3)Base case: if x is leaf then height of x is 0. Recursive case: Else, height of x is equal to one plus the maximum of the heights' of x's children.
+		 * 
+		 * @param x Node whose height is to be determined. 
+		 * @return height of x
+		 */
+		public int height(Node<E> x) {
+			int h = 0;
+			//No need to explicitly state base case since the for-loop represents the recursive case 
+			//and if the for-loop does not execute, i.e. node on current iteration does not have children thus we trigger base case since only leafs dont have children
+			for(Node<E> c : children(x))
+				h = h + Math.max(h, 1 + height(c)); //Recursive case: If x is not leaf then height of x is equal to one plus the maximum of the heights of x's children.
+			return h;
+		}
+		
 }
