@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 
@@ -76,42 +78,36 @@ public class BinaryTreeTraversalAlgorithms<E> {
 		return snapshot;
 	}
 	
-	//Nested node class
-		private class Node<E>{
-			//Feilds
-			E element;
-			Node<E> parent;
-			Node<E> left;
-			Node<E> right;
-			//Constructor
-			public Node(E e) {
-				this.element = e;
-			}
-			//Getters
-			public E getElement() {
-				return this.element;
-			}
-			public Node<E> getParent(){
-				return this.parent;
-			}
-			public Node<E> getLeftChild(){
-				return this.left;
-			}
-			public Node<E> getRightChild(){
-				return this.right;
-			}
-			//Setters
-			public void setElement(E newE) {
-				this.element = newE;
-			}
-			public void setLeft(Node<E> newL) {
-				this.left = newL;
-			}
-			public void setRight(Node<E> newR) {
-				this.right = newR; 
-			}
+	/**
+	 * Visit all nodes at depth d before moving on to visit all positions at d + 1.
+	 * This is NOT a recursive solution.
+	 * O(n) time and O(n^2) space (b/c we are maintain and dynamically growing a list and growing+shortening Queue ?? ==> please correct me if I'm wrong here :P)
+	 * PsuedoCode:
+	 * 		BFS()
+	 * 1)	Initialize Q with root enqeued in it
+	 * 2)	while Q is not empty do
+	 * 3) 		Node<E> p = Q.dequeue();
+	 * 4)		Perform "visit" action here i.e. add to snapshot list
+	 * 5)		for(Node<E> c : children(p);
+	 * 6)			Q.enqueue(c);
+	 * 
+	 * Used Snapshot technique to return collection of nodes in BFS order.
+	 * 
+	 * @return An iterable collection of Nodes in BFS order
+	 */
+	public Iterable<Node<E>> breadthFirst(){
+		List<Node<E>> snapshot = new ArrayList< >();
+		Queue<Node<E>> Q = new LinkedBlockingQueue< >();
+		Q.add(dummyRoot); //enqueue root!
+		while(!Q.isEmpty()) {
+			Node<E> p = Q.remove();//deqeue element at head to Q
+			snapshot.add(p);//perform "visit" operation here
+			for(Node<E> c : children(p))
+				Q.add(c);
 		}
-		
+		return snapshot;
+	}
+	
 		/**
 		 * Using snapshot technique as oppose to lazy iterator to return an Iterable collection for usage later.
 		 * A reason for using Iterable collection rather than a primitive array is because we can use the for-each loop syntax on our collection!
@@ -164,5 +160,40 @@ public class BinaryTreeTraversalAlgorithms<E> {
 				h = h + Math.max(h, 1 + height(c)); //Recursive case: If x is not leaf then height of x is equal to one plus the maximum of the heights of x's children.
 			return h;
 		}
-		
+		//Nested node class
+				private class Node<E>{
+					//Feilds
+					E element;
+					Node<E> parent;
+					Node<E> left;
+					Node<E> right;
+					//Constructor
+					public Node(E e) {
+						this.element = e;
+					}
+					//Getters
+					public E getElement() {
+						return this.element;
+					}
+					public Node<E> getParent(){
+						return this.parent;
+					}
+					public Node<E> getLeftChild(){
+						return this.left;
+					}
+					public Node<E> getRightChild(){
+						return this.right;
+					}
+					//Setters
+					public void setElement(E newE) {
+						this.element = newE;
+					}
+					public void setLeft(Node<E> newL) {
+						this.left = newL;
+					}
+					public void setRight(Node<E> newR) {
+						this.right = newR; 
+					}
+				}
+				
 }
