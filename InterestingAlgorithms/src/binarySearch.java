@@ -33,8 +33,8 @@ public class binarySearch<E>{
 			result = target.equals(resultArray[low]) ? true : false;
 		}else {	//recursive case
 			int mid = (high + low)/2;//calculating mid
-			if( resultArray[mid].compareToIgnoreCase(target) < 0) {
-				BinarySearchHelper(resultArray, target, mid+1, high);
+			if( resultArray[mid].compareToIgnoreCase(target) < 0) { //since I am comparing element at mid to target, as oppose to comparing target to mid element,
+				BinarySearchHelper(resultArray, target, mid+1, high); //my parameters seem weird but are logically accurate based on my implementation.
 			}else if(resultArray[mid].compareToIgnoreCase(target) > 0) {
 				BinarySearchHelper(resultArray, target, low, mid-1);
 			}else { //if result[mid] < target 
