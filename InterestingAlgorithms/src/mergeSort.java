@@ -34,7 +34,7 @@ public class mergeSort {
 		}
 		return sortedList;
 	}
-
+	// This is an Iterative solution for merge!
 	private List<Integer> merge(List<Integer> left, List<Integer> right) {
 		List<Integer> result = new ArrayList<Integer>();
 		int i = 0, j = 0; // left and right list index counters to track when we have reached the end our
