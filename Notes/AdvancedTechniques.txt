@@ -23,4 +23,18 @@ Often we wish to find a solution that has an optimal (maximum or minimum) value.
 A solution that has an optimal value, we call, an optimal solution.
 Not "the" b/c there may be other solutions that also achieve an optimal value.
 
+When designing a DP algorithm, we follow these four steps:
+1) Characterize the structure of an optimal solution.
+2) Recursively define the value of an optimal solution.
+3) Compute the value of an optimal solution (usually done in a bottom-up fashion)
+4) Construct an optimal solution from the computed information.
 
+Top-Down View
+Optimal Solutions to a problem incorporate Optimal Solutions to related subproblems, which we can solve independently.
+
+OP  --> OS
+↓			↓
+SUBP --> OSUBS
+
+Bottom-Up View
+An optimal solution to a subproblem is a subset of an optimal solution to problem.
