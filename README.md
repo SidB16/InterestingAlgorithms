@@ -315,3 +315,6 @@ or equal to those of the children and the lowest key is in the root node
 ## Computer Science News
 * [Hacker News](https://news.ycombinator.com/)
 * [Lobsters](https://lobste.rs/)
+
+## Credits
+https://github.com/kdn251
